@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-dotenv
+qdrant-client
+sentence-transformers
+PyPDF2
+openai
+redis
+REQ

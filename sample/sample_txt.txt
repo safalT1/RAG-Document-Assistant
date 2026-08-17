@@ -1,0 +1,26 @@
+What is Machine Learning?
+
+Machine Learning is a branch of Artificial Intelligence that allows computers
+to learn patterns from data and make predictions without being explicitly
+programmed for every rule.
+
+Types of Machine Learning
+
+There are three major types of machine learning:
+
+1. Supervised Learning
+Supervised learning uses labeled training data. Examples include house price
+prediction, spam detection, and image classification.
+
+2. Unsupervised Learning
+Unsupervised learning works with unlabeled data and attempts to discover hidden
+patterns or groups. Clustering is a common example.
+
+3. Reinforcement Learning
+Reinforcement learning trains an agent through rewards and penalties. The agent
+learns to select actions that maximize its cumulative reward.
+
+Machine Learning Applications
+
+Machine learning is commonly used for fraud detection, recommendation systems,
+image recognition, natural language processing, and predictive maintenance.
