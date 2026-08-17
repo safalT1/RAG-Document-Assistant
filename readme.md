@@ -75,7 +75,7 @@ RAG-Document-Assistant/
 
 ### 2. Clone & Install
 ```bash
-git clone https://github.com/safaltamang/RAG-Document-Assistant.git
+git clone https://github.com/safalT1/RAG-Document-Assistant
 cd RAG-Document-Assistant
 
 # Create virtual environment
@@ -120,7 +120,7 @@ Uploads a document, extracts text, applies chunking, and saves embeddings/metada
 **cURL Example:**
 ```bash
 curl -X POST "http://127.0.0.1:8000/ingest/upload?strategy=sentence" \
-  -F "file=@./sample.pdf" \
+  -F "file=@./sample1.pdf" \
   -H "Accept: application/json"
 ```
 
