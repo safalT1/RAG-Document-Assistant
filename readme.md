@@ -1,9 +1,10 @@
 # RAG Document Assistant Backend
+
 **Author:** Safal Tamang
 
 A complete backend implementation of a RAG (Retrieval-Augmented Generation) pipeline for document ingestion and conversational question-answering, featuring multi-turn chat memory and automatic interview booking extraction.
 
-
+---
 
 ## Features
 
@@ -33,6 +34,7 @@ A complete backend implementation of a RAG (Retrieval-Augmented Generation) pipe
 ---
 
 ## Project Structure (Modular Clean Code)
+
 ```text
 RAG-Document-Assistant/
 ├── app/
@@ -70,10 +72,11 @@ RAG-Document-Assistant/
 ### 1. Prerequisites
 - Python 3.10+
 - `git`
-- Redis server (optional, but recommended. In-memory dictionary fallback will be used if unavailable).
-- Qdrant runs locally via `qdrant-client` file-based storage, so no external daemon is required.
+- Redis server (optional, but recommended — an in-memory dictionary fallback is used if unavailable)
+- Qdrant runs locally via `qdrant-client` file-based storage, so no external daemon is required
 
 ### 2. Clone & Install
+
 ```bash
 git clone https://github.com/safalT1/RAG-Document-Assistant
 cd RAG-Document-Assistant
@@ -91,9 +94,10 @@ pip install -r requirements.txt
 ```
 
 ### 3. Environment Variables
+
 Create a `.env` file in the root directory:
+
 ```env
-# Example .env configuration
 GROQ_API_KEY=your_api_key_here
 REDIS_URL=redis://localhost:6379/0
 QDRANT_PATH=./qdrant_data
@@ -103,17 +107,21 @@ LLM_MODEL=openai/gpt-oss-20b
 ```
 
 ### 4. Run the API Server
+
 ```bash
 uvicorn app.main:app --reload
 ```
+
 The Swagger UI will be available at: **http://127.0.0.1:8000/docs**
 
 ---
 
 ## API Documentation & Endpoints
 
-### 1) Document Ingestion API `[POST /ingest/upload]`
+### 1) Document Ingestion API — `POST /ingest/upload`
+
 Uploads a document, extracts text, applies chunking, and saves embeddings/metadata.
+
 - **Query Parameter:** `strategy` (`fixed` or `sentence`)
 - **Body:** `multipart/form-data` with key `file`
 
@@ -135,15 +143,18 @@ curl -X POST "http://127.0.0.1:8000/ingest/upload?strategy=sentence" \
 }
 ```
 
-### 2) Conversational RAG API `[POST /chat/]`
+### 2) Conversational RAG API — `POST /chat/`
+
 Retrieves relevant vectors, triggers custom LLM generation, saves chat memory, and parses booking intent.
-- **Body:** JSON Payload
+
+**Request Body:**
 ```json
 {
   "session_id": "user-session-123",
   "query": "Can you summarize the context of the uploaded document?"
 }
 ```
+
 **Expected JSON Response:**
 ```json
 {
@@ -155,8 +166,13 @@ Retrieves relevant vectors, triggers custom LLM generation, saves chat memory, a
 }
 ```
 
-**Booking Trigger Example:**
-If the user passes: `"I’d like to schedule an interview for Safal Tamang, safaltamang@gmail.com, on 2026-08-25 at 10:00."`
+**Booking Trigger Example**
+
+If the user's message includes booking details — for example:
+> "I'd like to schedule an interview for Safal Tamang, safaltamang@gmail.com, on 2026-08-25 at 10:00."
+
+The response will include the extracted booking:
+```json
 {
   "answer": "Your interview has been booked successfully...",
   "booking": {
@@ -168,50 +184,49 @@ If the user passes: `"I’d like to schedule an interview for Safal Tamang, safa
 }
 ```
 
-### 3) Bookings API `[GET /bookings/]`
+### 3) Bookings API — `GET /bookings/`
+
 Lists all interviews booked and stored in the database.
 
 ---
 
 ## Test Evidence & Output Screenshots
 
-Below are screenshots demonstrating the successful testing of the project requirements via Swagger UI:
+Below are screenshots demonstrating successful testing of the project requirements via Swagger UI.
 
 ### 1. Document Ingestion (With Chunking)
-> **Action:** Successfully uploaded a PDF, extracted text, created chunks via Sentence Strategy, generated embeddings, and pushed them to Qdrant.
-
+> **Action:** Successfully uploaded a PDF, extracted text, created chunks via the sentence strategy, generated embeddings, and pushed them to Qdrant.
 
 ![Document Ingestion Output](sample/screenshots/ingest.png)
 
 ### 2. Conversational RAG & Multi-Turn Memory
 > **Action:** Custom RAG fetched document chunks from Qdrant and used them as context to correctly answer the query without `RetrievalQAChain`.
 
-Input:
-
+**Input:**
+```json
 {
   "session_id": "test011",
   "query": "What is this document about"
 }
+```
 
 ![Conversational RAG Output](sample/screenshots/chat.png)
 ![Conversational RAG Output](sample/screenshots/continued_chat.png)
 
 ### 3. Interview Booking Extraction via Chat
-> **Action:** Multi-turn query detected a booking intent, parsed the exact `Name`, `Email`, `Date`, and `Time`, and successfully recorded it into the SQLite DB.
+> **Action:** A multi-turn query detected booking intent, parsed the exact `Name`, `Email`, `Date`, and `Time`, and successfully recorded it into the SQLite DB.
 
-Input:
+**Input:**
+```json
 {
   "session_id": "booking_test_01",
   "query": "I would like to schedule an interview for Safal Tamang, whose email is safaltamang@gmail.com. We should do it on 2026-08-25 at 10:00."
 }
-
-
+```
 
 ![Interview Booking Output](sample/screenshots/booking.png)
 
 ### 4. Database Persistence Verification
-> **Action:** Bookings API returns the securely saved booking from the SQLite metadata table.
+> **Action:** The Bookings API returns the securely saved booking from the SQLite metadata table.
 
 ![Bookings API Output](sample/screenshots/show_all_bookings.png)
-
----
