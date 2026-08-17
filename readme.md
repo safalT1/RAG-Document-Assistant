@@ -15,6 +15,7 @@ A complete backend implementation of a RAG (Retrieval-Augmented Generation) pipe
 - **Vector Store:** Stores embeddings in **Qdrant** (local).
 - **Metadata Store:** Saves structural metadata in a **SQLite** database via SQLAlchemy.
 
+
 ### 2. Conversational RAG API
 - **Custom RAG:** Fully custom RAG pipeline implemented without `RetrievalQAChain`.
 - **Memory Context:** Uses **Redis** (with in-memory fallback) for multi-turn chat session memory.
