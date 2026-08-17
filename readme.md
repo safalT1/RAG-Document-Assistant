@@ -205,7 +205,7 @@ Below are screenshots demonstrating successful testing of the project requiremen
 **Input:**
 ```json
 {
-  "session_id": "test011",
+  "session_id": "testing01",
   "query": "What is this document about"
 }
 ```
@@ -219,7 +219,7 @@ Below are screenshots demonstrating successful testing of the project requiremen
 **Input:**
 ```json
 {
-  "session_id": "booking_test_01",
+  "session_id": "interview01",
   "query": "I would like to schedule an interview for Safal Tamang, whose email is safaltamang@gmail.com. We should do it on 2026-08-25 at 10:00."
 }
 ```
