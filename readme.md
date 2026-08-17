@@ -229,4 +229,4 @@ Below are screenshots demonstrating successful testing of the project requiremen
 ### 4. Database Persistence Verification
 > **Action:** The Bookings API returns the securely saved booking from the SQLite metadata table.
 
-![Bookings API Output](sample/screenshots/show_all_bookings.png)
+![Bookings API Output](sample/screenshots/show_all_booking.png)
